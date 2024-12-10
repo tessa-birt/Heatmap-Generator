@@ -30,11 +30,6 @@ if pasted_data:
         rule66_dict = {col: df[col].iloc[0] for col in df.columns if 'Real' in col or 'Int' in col}
 
 
-        missing_columns = [col for col in required_columns if col not in rule66_dict]
-        if missing_columns:
-            st.error(f"Missing required columns: {missing_columns}")
-            st.stop()
-
         # x and y axis values from the dictionary
         xmin = 0
         xmax = rule66_dict['Int16']
