@@ -5,43 +5,24 @@ from scipy.interpolate import RegularGridInterpolator
 import matplotlib.pyplot as plt
 import os
 
-# Path to the uploaded Excel file (Streamlit file uploader will handle this)
-uploaded_file = st.file_uploader("Choose an Excel file", type="xlsx")
+# Path to the uploaded file (Streamlit file uploader will handle this)
+uploaded_file = st.file_uploader("Choose a CSV or Excel file", type=["csv", "xls", "xlsx", "xlsm"])
 if uploaded_file is not None:
-    # Read the Excel file and select the "New Rule 66" sheet
-    xls = pd.ExcelFile(uploaded_file)
-    sheet_name = "New Rule 66"
-    
-    # Check if the sheet exists
-    if sheet_name not in xls.sheet_names:
-        st.error(f"Sheet '{sheet_name}' not found in the uploaded file.")
-        st.stop()
-    
-    df = pd.read_excel(xls, sheet_name=sheet_name)
-    
-    # Dynamically find the rows with the labels (like 'Real5', 'Real6', etc.)
-    # Assuming the labels are in a row, let's search for 'Real' labels in the columns
-    label_row = None
-    value_row = None
-    
-    for idx, row in df.iterrows():
-        if any('Real' in str(cell) for cell in row):  # Look for 'Real' labels in the row
-            label_row = idx
-            value_row = idx + 1  # Assume the values are in the row below the labels
-            break
+    # Check file extension to decide how to read the file
+    file_extension = uploaded_file.name.split('.')[-1].lower()
 
-    if label_row is None or value_row is None:
-        st.error("Could not find 'Real' labels and corresponding values.")
+    # Load the file based on the extension
+    if file_extension == "csv":
+        # If it's a CSV, use read_csv
+        op = pd.read_csv(uploaded_file, header=1, encoding='utf-8-sig')
+    elif file_extension in ["xls", "xlsx", "xlsm"]:
+        # If it's an Excel file, use read_excel
+        op = pd.read_excel(uploaded_file, sheet_name="New Rule 66", header=1)  # Read from the 'New Rule 66' sheet
+    else:
+        st.error("Unsupported file format")
         st.stop()
 
-    # Extract the labels and values
-    labels = df.iloc[label_row].values
-    values = df.iloc[value_row].values
-
-    # Create a dictionary with the label-value pairs
-    rule66_dict = {str(label): value for label, value in zip(labels, values)}
-
-    # Add fixed values (adjust as needed for your specific case)
+    # Define the fixed values (these are values not in the CSV/Excel)
     fixed_values = {
         'Int21': 190000,
         'Int22': 196000,
@@ -54,7 +35,15 @@ if uploaded_file is not None:
         'Int36': 1
     }
 
-    # Update the dictionary with fixed values
+    # Create the rule66_dict
+    rule66_dict = {}
+
+    # First, add values from the CSV/Excel row
+    for col in op.columns:
+        clean_col = col.strip("'")
+        rule66_dict[clean_col] = op[col].values[0]
+
+    # Then, update with fixed values
     rule66_dict.update(fixed_values)
 
     # Verify the dictionary contains all required keys
@@ -80,20 +69,20 @@ if uploaded_file is not None:
 
     # Table values
     newz2 = np.array([
-        [rule66_dict.get('Real5', 0), rule66_dict.get('Real12', 0), rule66_dict.get('Real19', 0), rule66_dict.get('Real26', 0),
-         rule66_dict.get('Real33', 0), rule66_dict.get('Int23', 0), rule66_dict.get('Int30', 0)],
-        [rule66_dict.get('Real6', 0), rule66_dict.get('Real13', 0), rule66_dict.get('Real20', 0), rule66_dict.get('Real27', 0),
-         rule66_dict.get('Real34', 0), rule66_dict.get('Int24', 0), rule66_dict.get('Int31', 0)],
-        [rule66_dict.get('Real7', 0), rule66_dict.get('Real14', 0), rule66_dict.get('Real21', 0), rule66_dict.get('Real28', 0),
-         rule66_dict.get('Real35', 0), rule66_dict.get('Int25', 0), rule66_dict.get('Int32', 0)],
-        [rule66_dict.get('Real8', 0), rule66_dict.get('Real15', 0), rule66_dict.get('Real22', 0), rule66_dict.get('Real29', 0),
-         rule66_dict.get('Real36', 0), rule66_dict.get('Int26', 0), rule66_dict.get('Int33', 0)],
-        [rule66_dict.get('Real9', 0), rule66_dict.get('Real16', 0), rule66_dict.get('Real23', 0), rule66_dict.get('Real30', 0),
-         rule66_dict.get('Real37', 0), rule66_dict.get('Int27', 0), rule66_dict.get('Int34', 0)],
-        [rule66_dict.get('Real10', 0), rule66_dict.get('Real17', 0), rule66_dict.get('Real24', 0), rule66_dict.get('Real31', 0),
-         rule66_dict.get('Real38', 0), rule66_dict.get('Int28', 0), rule66_dict.get('Int35', 0)],
-        [rule66_dict.get('Real11', 0), rule66_dict.get('Real18', 0), rule66_dict.get('Real25', 0), rule66_dict.get('Real32', 0),
-         rule66_dict.get('Real39', 0), rule66_dict.get('Int29', 0), rule66_dict.get('Int36', 0)]
+        [rule66_dict['Real5'], rule66_dict['Real12'], rule66_dict['Real19'], rule66_dict['Real26'],
+         rule66_dict['Real33'], rule66_dict['Int23'], rule66_dict['Int30']],
+        [rule66_dict['Real6'], rule66_dict['Real13'], rule66_dict['Real20'], rule66_dict['Real27'],
+         rule66_dict['Real34'], rule66_dict['Int24'], rule66_dict['Int31']],
+        [rule66_dict['Real7'], rule66_dict['Real14'], rule66_dict['Real21'], rule66_dict['Real28'],
+         rule66_dict['Real35'], rule66_dict['Int25'], rule66_dict['Int32']],
+        [rule66_dict['Real8'], rule66_dict['Real15'], rule66_dict['Real22'], rule66_dict['Real29'],
+         rule66_dict['Real36'], rule66_dict['Int26'], rule66_dict['Int33']],
+        [rule66_dict['Real9'], rule66_dict['Real16'], rule66_dict['Real23'], rule66_dict['Real30'],
+         rule66_dict['Real37'], rule66_dict['Int27'], rule66_dict['Int34']],
+        [rule66_dict['Real10'], rule66_dict['Real17'], rule66_dict['Real24'], rule66_dict['Real31'],
+         rule66_dict['Real38'], rule66_dict['Int28'], rule66_dict['Int35']],
+        [rule66_dict['Real11'], rule66_dict['Real18'], rule66_dict['Real25'], rule66_dict['Real32'],
+         rule66_dict['Real39'], rule66_dict['Int29'], rule66_dict['Int36']]
     ])
 
     # Interpolation
