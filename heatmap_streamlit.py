@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.interpolate import RegularGridInterpolator
 import matplotlib.pyplot as plt
 
-# Create a text area for user to paste the table data
+# Create a text area for user to paste the table
 pasted_data = st.text_area("Paste the table data here (Tab-delimited format)", height=300)
 
 if pasted_data:
@@ -29,18 +29,6 @@ if pasted_data:
         # Extract necessary values (e.g., Real5, Real6, etc.)
         rule66_dict = {col: df[col].iloc[0] for col in df.columns if 'Real' in col or 'Int' in col}
 
-        # Define fixed values for Int21 and Int22
-        fixed_values = {
-            'Int21': 190000,
-            'Int22': 196000
-        }
-
-        # Update the dictionary with fixed values
-        rule66_dict.update(fixed_values)
-
-        # Verify the dictionary contains all required keys (excluding Int21 and Int22)
-        required_columns = ['Int16', 'Int11', 'Int12', 'Int13', 'Int14', 'Int15', 
-                            'Int17', 'Int18', 'Int19', 'Int20']
 
         missing_columns = [col for col in required_columns if col not in rule66_dict]
         if missing_columns:
