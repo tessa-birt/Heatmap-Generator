@@ -152,17 +152,8 @@ def main():
     
     **Example:**
     ```
-    Int11	Int12	Int13	Int14	Int15	Int16	Int17	Int18	Int19	Int20	Int21	Int22	Int23	
-    Int24	Int25	Int26	Int27	Int28	Int29	Int30	Int31	Int32	Int33	Int34	Int35	Int36	
-    Int37	Int38	Int39	Int40	Real1	Real2	Real3	Real4	Real5	Real6	Real7	Real8	Real9	
-    Real10	Real11	Real12	Real13	Real14	Real15	Real16	Real17	Real18	Real19	Real20	Real21	Real22	
-    Real23	Real24	Real25	Real26	Real27	Real28	Real29	Real30	Real31	Real32	Real33	Real34	Real35	
-    Real36	Real37	Real38	Real39
-    1000	35000	50000	100000	150000	257000	1000	33000	65000	100000	190000	196000	97	97	
-    95	91	87	84	1	97	97	95	93	91	89	1	953500	553600	1	-1	0	0	0	0	0	0	0	0	
-    0	0	0	97	49	2	1	1	1	1	97	90	50	40	32	19	1	97	95	75	45	39	33	1	97	97	
-    95	66	39	33	1	1500
-    
+    Int11	Int12	Int13	Int14	Int15	Int16	Int17	Int18	Int19	Int20	Int21	Int22	Int23	Int24	Int25	Int26	Int27	Int28	Int29	Int30	Int31	Int32	Int33	Int34	Int35	Int36	Int37	Int38	Int39	Int40	Real1	Real2	Real3	Real4	Real5	Real6	Real7	Real8	Real9	Real10	Real11	Real12	Real13	Real14	Real15	Real16	Real17	Real18	Real19	Real20	Real21	Real22	Real23	Real24	Real25	Real26	Real27	Real28	Real29	Real30	Real31	Real32	Real33	Real34	Real35	Real36	Real37	Real38	Real39
+    1000	35000	50000	100000	150000	257000	1000	33000	65000	100000	190000	196000	97	97	95	91	87	84	1	97	97	95	93	91	89	1	953500	553600	1	-1	0	0	0	0	0	0	0	0	0	0	0	97	49	2	1	1	1	1	97	90	50	40	32	19	1	97	95	75	45	39	33	1	97	97	95	66	39	33	1
     ```
     """)
     
