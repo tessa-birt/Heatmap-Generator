@@ -146,14 +146,14 @@ def main():
     # Instructions
     st.markdown("""
     ### How to Use
-    1. Copy the entire row of column names from Excel
+    1. 1.	Copy the entire row of column names from Excel (INT11 thru REAL39)
     2. Copy the entire row of corresponding values from Excel
     3. Paste the rows in the text area below (tab-separated)
     
     **Example:**
     ```
-    Real5   Real12   Real19   Real26   Real33   Int23   Int30
-    0.5     0.6     0.7     0.8     0.9     100     200
+    Int11     Int12     Int13     Int14     Int15     Int16     Int17     Int18     Int19     Int20     Int21     Int22     Int23     Int24     Int25                Int26     Int27     Int28     Int29     Int30     Int31     Int32     Int33     Int34     Int35     Int36     Int37     Int38     Int39                Int40     Real1    Real2    Real3    Real4    Real5    Real6    Real7    Real8    Real9    Real10 Real11 Real12                Real13 Real14 Real15 Real16 Real17 Real18 Real19 Real20 Real21 Real22 Real23 Real24 Real25                Real26 Real27 Real28 Real29 Real30 Real31 Real32 Real33 Real34 Real35 Real36 Real37 Real38                Real39
+    1000     35000   50000   100000 150000 257000 1000     33000   65000   100000 190000 196000 97           97           95                91           87           84           1             97           97           95           93           91           89           1             953500 553600 1                -1            0             0             0             0             0             0             0             0             0             0             0             97           49                2             1             1             1             
     ```
     """)
     
